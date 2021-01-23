@@ -5,6 +5,7 @@ namespace App\Infrastructure\Doctrine;
 use App\Domain\Entity\User;
 use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\ValueObject\Email;
+use App\Domain\ValueObject\Password;
 use Doctrine\ORM\EntityManager;
 
 class UserRepository implements UserRepositoryInterface
@@ -25,6 +26,16 @@ class UserRepository implements UserRepositoryInterface
     public function findByEmail(Email $email): ?User
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+
+        return $user instanceof User ? $user : null;
+    }
+
+    public function findByEmailAndPassword(Email $email, Password $password): ?User
+    {
+        $user = $this->entityManager->getRepository(User::class)->findOneBy([
+            'email' => $email,
+            'password' => $password
+        ]);
 
         return $user instanceof User ? $user : null;
     }

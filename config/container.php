@@ -4,6 +4,7 @@ use App\Application\Auth\AuthenticationInterface;
 use App\Application\Auth\JWT\Authentication;
 use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\Service\CadastrarUser;
+use App\Domain\Service\LocalizarUser;
 use App\Infrastructure\Doctrine\UserRepository;
 use DI\Container;
 use Lcobucci\JWT\Configuration;
@@ -25,6 +26,9 @@ $container->set(AuthenticationInterface::class, static function () {
 // Services
 $container->set(CadastrarUser::class, static function (Container $container) {
     return new CadastrarUser($container->get(UserRepositoryInterface::class));
+});
+$container->set(LocalizarUser::class, static function (Container $container) {
+    return new LocalizarUser($container->get(UserRepositoryInterface::class));
 });
 
 // Repository
