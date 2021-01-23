@@ -104,7 +104,7 @@ class CadastraUserDTOTest extends TestCase
             ],
             'fromArrayDeveFalharSeEmailForNull'     => [
                 'data'             => $substituirValor('email', null),
-                'exceptionMessage' => '"email" must be a valid email',
+                'exceptionMessage' => '"email" is required',
             ],
             'fromArrayDeveFalharSeEmailForVazio'     => [
                 'data'             => $substituirValor('email', ''),
@@ -112,7 +112,7 @@ class CadastraUserDTOTest extends TestCase
             ],
             'fromArrayDeveFalharSeEmailNaoForEnviado'     => [
                 'data'             => $emailNaoEnviado,
-                'exceptionMessage' => '"email" must be a valid email',
+                'exceptionMessage' => '"email" is required',
             ],
             'fromArrayDeveFalharSePasswordTiverMenosDeSeisCaracteres'     => [
                 'data'             => $substituirValor('password', '12345'),
@@ -120,7 +120,7 @@ class CadastraUserDTOTest extends TestCase
             ],
             'fromArrayDeveFalharSePasswordForNull'     => [
                 'data'             => $substituirValor('password', null),
-                'exceptionMessage' => '"password" length must be at least 6 characters long',
+                'exceptionMessage' => '"password" is required',
             ],
             'fromArrayDeveFalharSePasswordForVazio'     => [
                 'data'             => $substituirValor('password', ''),
@@ -128,7 +128,7 @@ class CadastraUserDTOTest extends TestCase
             ],
             'fromArrayDeveFalharSePasswordNaoForEnviado'     => [
                 'data'             => $passwordNaoEnviado,
-                'exceptionMessage' => '"password" length must be at least 6 characters long',
+                'exceptionMessage' => '"password" is required',
             ]
         ];
     }

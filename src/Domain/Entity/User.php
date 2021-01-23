@@ -67,6 +67,11 @@ class User
     {
     }
 
+    public function id(): UserId
+    {
+        return $this->id;
+    }
+
     public static function novo (
         DisplayName $displayName,
         Email $email,

@@ -38,17 +38,21 @@ class CadastraUserDTO
 
     public static function fromArray(array $params): self
     {
-        Assertion::keyIsset($params, 'displayName', '"displayName" length must be at least 8 characters long');
+        Assertion::keyIsset(
+            $params,
+            'displayName',
+            sprintf('"displayName" length must be at least %s characters long', self::DISPLAY_NAME_MIN_CARACTERES)
+        );
         Assertion::minLength(
             $params['displayName'],
             self::DISPLAY_NAME_MIN_CARACTERES,
             sprintf('"displayName" length must be at least %s characters long', self::DISPLAY_NAME_MIN_CARACTERES)
         );
 
-        Assertion::keyIsset($params, 'email', '"email" must be a valid email');
+        Assertion::keyIsset($params, 'email', '"email" is required');
         Assertion::email($params['email'], '"email" must be a valid email');
 
-        Assertion::keyIsset($params, 'password', '"password" length must be at least 6 characters long');
+        Assertion::keyIsset($params, 'password', '"password" is required');
         Assertion::minLength($params['password'],
             self::PASSWORD_MIN_CARACTERES,
             sprintf('"password" length must be at least %s characters long', self::PASSWORD_MIN_CARACTERES)
