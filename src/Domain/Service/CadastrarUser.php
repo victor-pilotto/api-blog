@@ -4,10 +4,10 @@ namespace App\Domain\Service;
 
 use App\Domain\DTO\CadastraUserDTO;
 use App\Domain\Entity\User;
+use App\Domain\Exception;
 use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\ValueObject\DisplayName;
 use App\Domain\ValueObject\Email;
-use App\Domain\Exception;
 use App\Domain\ValueObject\Image;
 use App\Domain\ValueObject\Password;
 
@@ -20,16 +20,17 @@ class CadastrarUser
         $this->userRepository = $userRepository;
     }
 
-    public function cadastrar(CadastraUserDTO $cadastraUserDTO): User
+    public function cadastrar(CadastraUserDTO $cadastraUserDto): User
     {
-        $email = Email::fromString($cadastraUserDTO->getEmail());
+        $email = Email::fromString($cadastraUserDto->getEmail());
         $this->verificaSeUsuarioExiste($email);
 
+
         $user = User::novo(
-            DisplayName::fromString($cadastraUserDTO->getDisplayName()),
+            DisplayName::fromString($cadastraUserDto->getDisplayName()),
             $email,
-            Password::fromString($cadastraUserDTO->getPassword()),
-            $cadastraUserDTO->getImage() ? Image::fromString($cadastraUserDTO->getImage()) : null
+            Password::fromString($cadastraUserDto->getPassword()),
+            $cadastraUserDto->getImage() !== null ? Image::fromString($cadastraUserDto->getImage()) : null
         );
 
         $this->userRepository->store($user);

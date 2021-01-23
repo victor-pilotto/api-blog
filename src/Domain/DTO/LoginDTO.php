@@ -6,8 +6,6 @@ use Assert\Assertion;
 
 class LoginDTO
 {
-    private const PASSWORD_MIN_CARACTERES = 6;
-
     private function __construct(
         private string $email,
         private string $password
@@ -26,13 +24,10 @@ class LoginDTO
     public static function fromArray(array $params): self
     {
         Assertion::keyIsset($params, 'email', '"email" is required');
-        Assertion::email($params['email'], '"email" must be a valid email');
+        Assertion::notEmpty($params['email'], '"email" is not allowed to be empty');
 
         Assertion::keyIsset($params, 'password', '"password" is required');
-        Assertion::minLength($params['password'],
-            self::PASSWORD_MIN_CARACTERES,
-            sprintf('"password" length must be at least %s characters long', self::PASSWORD_MIN_CARACTERES)
-        );
+        Assertion::notEmpty($params['password'], '"password" is not allowed to be empty');
 
         return new self(
             $params['email'],

@@ -7,6 +7,10 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Handlers\ErrorHandler;
 use Throwable;
 
+use function json_encode;
+
+use const JSON_UNESCAPED_UNICODE;
+
 class InvalidArgumentExceptionHandler extends ErrorHandler
 {
     public function __invoke(
@@ -15,12 +19,12 @@ class InvalidArgumentExceptionHandler extends ErrorHandler
         bool $displayErrorDetails,
         bool $logErrors,
         bool $logErrorDetails
-    ): ResponseInterface{
+    ): ResponseInterface {
         $payload = ['message' => $exception->getMessage()];
 
         $response = $this->responseFactory->createResponse();
         $response->getBody()->write(
-            json_encode($payload, JSON_UNESCAPED_UNICODE)
+            json_encode($payload, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE)
         );
 
         return $response->withStatus(400);

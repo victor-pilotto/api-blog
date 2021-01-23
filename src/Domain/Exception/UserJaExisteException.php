@@ -2,7 +2,9 @@
 
 namespace App\Domain\Exception;
 
-class UserJaExisteException extends \DomainException
+use DomainException;
+
+class UserJaExisteException extends DomainException
 {
     public static function execute(): self
     {

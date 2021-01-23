@@ -6,6 +6,8 @@ use App\Domain\DTO\CadastraUserDTO;
 use InvalidArgumentException;
 use PHPStan\Testing\TestCase;
 
+use function array_merge;
+
 class CadastraUserDTOTest extends TestCase
 {
     /** @test */
@@ -13,17 +15,17 @@ class CadastraUserDTOTest extends TestCase
     {
         $defaultParams = [
             'displayName' => 'João Pedro',
-            'email' => 'joao@gmail.com',
-            'password' => '123456',
-            'image' => 'http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png'
+            'email'       => 'joao@gmail.com',
+            'password'    => '123456',
+            'image'       => 'http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png',
         ];
 
-        $cadastraUserDTO = CadastraUserDTO::fromArray($defaultParams);
+        $cadastraUserDto = CadastraUserDTO::fromArray($defaultParams);
 
-        self::assertSame($defaultParams['displayName'], $cadastraUserDTO->getDisplayName());
-        self::assertSame($defaultParams['email'], $cadastraUserDTO->getEmail());
-        self::assertSame($defaultParams['password'], $cadastraUserDTO->getPassword());
-        self::assertSame($defaultParams['image'], $cadastraUserDTO->getImage());
+        self::assertSame($defaultParams['displayName'], $cadastraUserDto->getDisplayName());
+        self::assertSame($defaultParams['email'], $cadastraUserDto->getEmail());
+        self::assertSame($defaultParams['password'], $cadastraUserDto->getPassword());
+        self::assertSame($defaultParams['image'], $cadastraUserDto->getImage());
     }
 
     /** @test */
@@ -31,16 +33,16 @@ class CadastraUserDTOTest extends TestCase
     {
         $defaultParams = [
             'displayName' => 'João Pedro',
-            'email' => 'joao@gmail.com',
-            'password' => '123456'
+            'email'       => 'joao@gmail.com',
+            'password'    => '123456',
         ];
 
-        $cadastraUserDTO = CadastraUserDTO::fromArray($defaultParams);
+        $cadastraUserDto = CadastraUserDTO::fromArray($defaultParams);
 
-        self::assertSame($defaultParams['displayName'], $cadastraUserDTO->getDisplayName());
-        self::assertSame($defaultParams['email'], $cadastraUserDTO->getEmail());
-        self::assertSame($defaultParams['password'], $cadastraUserDTO->getPassword());
-        self::assertNull($cadastraUserDTO->getImage());
+        self::assertSame($defaultParams['displayName'], $cadastraUserDto->getDisplayName());
+        self::assertSame($defaultParams['email'], $cadastraUserDto->getEmail());
+        self::assertSame($defaultParams['password'], $cadastraUserDto->getPassword());
+        self::assertNull($cadastraUserDto->getImage());
     }
 
     /**
@@ -59,9 +61,9 @@ class CadastraUserDTOTest extends TestCase
     {
         $defaultParams = [
             'displayName' => 'João Pedro',
-            'email' => 'joao@gmail.com',
-            'password' => '123456',
-            'image' => 'http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png'
+            'email'       => 'joao@gmail.com',
+            'password'    => '123456',
+            'image'       => 'http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png',
         ];
 
         $displayNameNaoEnviado = $defaultParams;
@@ -78,58 +80,58 @@ class CadastraUserDTOTest extends TestCase
         };
 
         return [
-            'fromArrayDeveFalharSeDisplayNameTiverMenosDeOitoCaracteres'     => [
+            'fromArrayDeveFalharSeDisplayNameTiverMenosDeOitoCaracteres' => [
                 'data'             => $substituirValor('displayName', '1234567'),
                 'exceptionMessage' => '"displayName" length must be at least 8 characters long',
             ],
-            'fromArrayDeveFalharSeDisplayNameForNull'     => [
+            'fromArrayDeveFalharSeDisplayNameForNull'                    => [
                 'data'             => $substituirValor('displayName', null),
                 'exceptionMessage' => '"displayName" length must be at least 8 characters long',
             ],
-            'fromArrayDeveFalharSeDisplayNameForVazio'     => [
+            'fromArrayDeveFalharSeDisplayNameForVazio'                   => [
                 'data'             => $substituirValor('displayName', ''),
                 'exceptionMessage' => '"displayName" length must be at least 8 characters long',
             ],
-            'fromArrayDeveFalharSeDisplayNameNaoForEnviado'     => [
+            'fromArrayDeveFalharSeDisplayNameNaoForEnviado'              => [
                 'data'             => $displayNameNaoEnviado,
                 'exceptionMessage' => '"displayName" length must be at least 8 characters long',
             ],
-            'fromArrayDeveFalharSeEmailNaoTiverDominio'     => [
+            'fromArrayDeveFalharSeEmailNaoTiverDominio'                  => [
                 'data'             => $substituirValor('email', 'joao@'),
                 'exceptionMessage' => '"email" must be a valid email',
             ],
-            'fromArrayDeveFalharSeEmailNaoTiverPrefixo'     => [
+            'fromArrayDeveFalharSeEmailNaoTiverPrefixo'                  => [
                 'data'             => $substituirValor('email', '@gmail.com'),
                 'exceptionMessage' => '"email" must be a valid email',
             ],
-            'fromArrayDeveFalharSeEmailForNull'     => [
+            'fromArrayDeveFalharSeEmailForNull'                          => [
                 'data'             => $substituirValor('email', null),
                 'exceptionMessage' => '"email" is required',
             ],
-            'fromArrayDeveFalharSeEmailForVazio'     => [
+            'fromArrayDeveFalharSeEmailForVazio'                         => [
                 'data'             => $substituirValor('email', ''),
                 'exceptionMessage' => '"email" must be a valid email',
             ],
-            'fromArrayDeveFalharSeEmailNaoForEnviado'     => [
+            'fromArrayDeveFalharSeEmailNaoForEnviado'                    => [
                 'data'             => $emailNaoEnviado,
                 'exceptionMessage' => '"email" is required',
             ],
-            'fromArrayDeveFalharSePasswordTiverMenosDeSeisCaracteres'     => [
+            'fromArrayDeveFalharSePasswordTiverMenosDeSeisCaracteres'    => [
                 'data'             => $substituirValor('password', '12345'),
                 'exceptionMessage' => '"password" length must be at least 6 characters long',
             ],
-            'fromArrayDeveFalharSePasswordForNull'     => [
+            'fromArrayDeveFalharSePasswordForNull'                       => [
                 'data'             => $substituirValor('password', null),
                 'exceptionMessage' => '"password" is required',
             ],
-            'fromArrayDeveFalharSePasswordForVazio'     => [
+            'fromArrayDeveFalharSePasswordForVazio'                      => [
                 'data'             => $substituirValor('password', ''),
                 'exceptionMessage' => '"password" length must be at least 6 characters long',
             ],
-            'fromArrayDeveFalharSePasswordNaoForEnviado'     => [
+            'fromArrayDeveFalharSePasswordNaoForEnviado'                 => [
                 'data'             => $passwordNaoEnviado,
                 'exceptionMessage' => '"password" is required',
-            ]
+            ],
         ];
     }
 }

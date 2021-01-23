@@ -33,8 +33,8 @@ class UserRepository implements UserRepositoryInterface
     public function findByEmailAndPassword(Email $email, Password $password): ?User
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
-            'email' => $email,
-            'password' => $password
+            'email'    => $email,
+            'password' => $password,
         ]);
 
         return $user instanceof User ? $user : null;

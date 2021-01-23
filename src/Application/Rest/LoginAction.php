@@ -6,8 +6,8 @@ use App\Application\Auth\AuthenticationInterface;
 use App\Domain\DTO\LoginDTO;
 use App\Domain\Service\LocalizarUser;
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class LoginAction
 {
@@ -18,19 +18,19 @@ class LoginAction
         $this->container = $container;
     }
 
-    public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $params = $request->getParsedBody();
 
-        $loginDTO = LoginDTO::fromArray($params);
+        $loginDto = LoginDTO::fromArray((array)$params);
 
         /** @var LocalizarUser $localizarUser */
         $localizarUser = $this->container->get(LocalizarUser::class);
-        $user = $localizarUser->localizar($loginDTO);
+        $user          = $localizarUser->localizar($loginDto);
 
         /** @var AuthenticationInterface $authentication */
         $authentication = $this->container->get(AuthenticationInterface::class);
-        $token = $authentication->generateToken($user);
+        $token          = $authentication->generateToken($user);
 
         $response->getBody()->write(json_encode(['token' => $token], JSON_THROW_ON_ERROR));
         return $response

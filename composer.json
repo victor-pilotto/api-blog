@@ -44,7 +44,7 @@
       "@pdepend"
     ],
     "cs-check": "phpcs",
-    "cs-fix": "phpcbf --no-patch",
+    "cs-fix": "phpcbf",
     "test": "phpunit --colors=always",
     "analyze": "phpstan analyse ./src --level max --memory-limit=4000M"
   }

@@ -33,7 +33,6 @@ class Post
      */
     private Title $title;
 
-
     /**
      * @ORM\Column(
      *     name="content",
@@ -42,7 +41,6 @@ class Post
      */
     private Content $content;
 
-
     /**
      * @ORM\Column(
      *     name="published",
@@ -50,7 +48,6 @@ class Post
      * )
      */
     private Published $published;
-
 
     /**
      * @ORM\Column(

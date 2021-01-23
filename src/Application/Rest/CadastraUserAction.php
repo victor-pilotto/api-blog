@@ -6,8 +6,12 @@ use App\Application\Auth\AuthenticationInterface;
 use App\Domain\DTO\CadastraUserDTO;
 use App\Domain\Service\CadastrarUser;
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+
+use function json_encode;
+
+use const JSON_THROW_ON_ERROR;
 
 class CadastraUserAction
 {
@@ -18,19 +22,19 @@ class CadastraUserAction
         $this->container = $container;
     }
 
-    public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $params = $request->getParsedBody();
 
-        $cadastraUserDTO = CadastraUserDTO::fromArray($params);
+        $cadastraUserDto = CadastraUserDTO::fromArray((array)$params);
 
         /** @var CadastrarUser $cadastrarUser */
         $cadastrarUser = $this->container->get(CadastrarUser::class);
-        $user = $cadastrarUser->cadastrar($cadastraUserDTO);
+        $user          = $cadastrarUser->cadastrar($cadastraUserDto);
 
         /** @var AuthenticationInterface $authentication */
         $authentication = $this->container->get(AuthenticationInterface::class);
-        $token = $authentication->generateToken($user);
+        $token          = $authentication->generateToken($user);
 
         $response->getBody()->write(json_encode(['token' => $token], JSON_THROW_ON_ERROR));
         return $response

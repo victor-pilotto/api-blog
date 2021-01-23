@@ -15,14 +15,14 @@ final class Updated extends DateTimeImmutable
 
     public static function fromString(string $updated): self
     {
-        $instance = new self();
+        $instance          = new self();
         $instance->updated = new DateTimeImmutable($updated);
         return $instance;
     }
 
     public static function agora(): self
     {
-        $instance = new self();
+        $instance          = new self();
         $instance->updated = new DateTimeImmutable();
         return $instance;
     }

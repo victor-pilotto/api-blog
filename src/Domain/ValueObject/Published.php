@@ -19,7 +19,7 @@ final class Published
 
     public static function fromString(string $published): self
     {
-        $instance               = new self();
+        $instance            = new self();
         $instance->published = new DateTimeImmutable($published);
         return $instance;
     }

@@ -7,6 +7,7 @@ use App\Application\Auth\Exception;
 use App\Domain\Entity\User;
 use App\Domain\ValueObject\UserId;
 use Lcobucci\JWT\Configuration;
+use Lcobucci\JWT\Token;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
 
 class Authentication implements AuthenticationInterface
@@ -22,7 +23,7 @@ class Authentication implements AuthenticationInterface
     {
         return $this->config->builder()
             ->issuedBy('blog')
-            ->identifiedBy($user->id()->value())
+            ->identifiedBy((string)$user->id()->value())
             ->permittedFor('blog')
             ->getToken($this->config->signer(), $this->config->signingKey())
             ->toString();
@@ -35,9 +36,9 @@ class Authentication implements AuthenticationInterface
         $this->config->setValidationConstraints(new SignedWith($this->config->signer(), $this->config->signingKey()));
 
         if (! $this->config->validator()->validate($token, ...$this->config->validationConstraints())) {
-            throw Exception\TokenInvalido::fromInvalido();
+            throw Exception\TokenInvalidoException::fromInvalido();
         }
 
-        return UserId::fromInt($token->claims()->get('jti'));
+       return UserId::fromInt($token->claims()->get('jti'));
     }
 }

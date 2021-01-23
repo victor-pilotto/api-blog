@@ -58,9 +58,7 @@ class User
      */
     private ?Image $image;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="user", cascade={"persist", "remove"})
-     */
+    /** @ORM\OneToMany(targetEntity="Post", mappedBy="user", cascade={"persist", "remove"}) */
     private Collection $posts;
 
     private function __construct()
@@ -72,18 +70,18 @@ class User
         return $this->id;
     }
 
-    public static function novo (
+    public static function novo(
         DisplayName $displayName,
         Email $email,
         Password $password,
         ?Image $image
-    ) :self {
+    ): self {
         $instance = new self();
 
         $instance->displayName = $displayName;
-        $instance->email = $email;
-        $instance->password = $password;
-        $instance->image = $image;
+        $instance->email       = $email;
+        $instance->password    = $password;
+        $instance->image       = $image;
 
         return $instance;
     }

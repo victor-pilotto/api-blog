@@ -2,7 +2,9 @@
 
 namespace App\Domain\Exception;
 
-class LoginComCamposInvalidos extends \InvalidArgumentException
+use InvalidArgumentException;
+
+class LoginComCamposInvalidosException extends InvalidArgumentException
 {
     public static function execute(): self
     {

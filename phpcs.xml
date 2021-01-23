@@ -11,33 +11,27 @@
     <!-- Show progress -->
     <arg value="p"/>
 
-<!--    <exclude-pattern>test</exclude-pattern>-->
     <exclude-pattern>src/Rest</exclude-pattern>
-<!--    <exclude-pattern>src/Core/Infrastructure/Migration</exclude-pattern>-->
 
     <!-- Paths to check -->
     <file>src</file>
     <file>test</file>
 
     <!-- Include all rules from the Laminas Coding Standard -->
-<!--    <rule ref="LaminasCodingStandard">-->
-<!--        <exclude name="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>-->
-<!--        <exclude name="WebimpressCodingStandard.NamingConventions.Trait"/>-->
-<!--        <exclude name="WebimpressCodingStandard.NamingConventions.Interface"/>-->
-<!--        <exclude name="WebimpressCodingStandard.NamingConventions.Exception"/>-->
-<!--        <exclude name="WebimpressCodingStandard.NamingConventions.AbstractClass"/>-->
-<!--        <exclude name="WebimpressCodingStandard.PHP.ImportInternalConstant"/>-->
-<!--        <exclude name="WebimpressCodingStandard.PHP.ImportInternalFunction"/>-->
+    <rule ref="LaminasCodingStandard">
+        <exclude name="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
+        <exclude name="WebimpressCodingStandard.PHP.ImportInternalConstant"/>
+        <exclude name="WebimpressCodingStandard.PHP.ImportInternalFunction"/>
 <!--        <exclude name="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFallbackGlobalName"/>-->
-<!--        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.UselessAnnotation"/>-->
-<!--    </rule>-->
-<!--    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint">-->
-<!--        <exclude-pattern>src/**/DbalType</exclude-pattern>-->
-<!--    </rule>-->
-<!--    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint">-->
-<!--        <exclude-pattern>src/**/DbalType</exclude-pattern>-->
-<!--    </rule>-->
-<!--    <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration">-->
-<!--        <exclude-pattern>src/**/DbalType</exclude-pattern>-->
-<!--    </rule>-->
+        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.UselessAnnotation"/>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint">
+        <exclude-pattern>src/**/DbalType</exclude-pattern>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint">
+        <exclude-pattern>src/**/DbalType</exclude-pattern>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration">
+        <exclude-pattern>src/**/DbalType</exclude-pattern>
+    </rule>
 </ruleset>

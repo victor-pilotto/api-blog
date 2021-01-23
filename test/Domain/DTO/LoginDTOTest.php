@@ -12,14 +12,14 @@ class LoginDTOTest extends TestCase
     public function fromArrayDeveFuncionar(): void
     {
         $defaultParams = [
-            'email' => 'joao@gmail.com',
+            'email'    => 'joao@gmail.com',
             'password' => '123456',
         ];
 
-        $loginDTO = LoginDTO::fromArray($defaultParams);
+        $loginDto = LoginDTO::fromArray($defaultParams);
 
-        self::assertSame($defaultParams['email'], $loginDTO->getEmail());
-        self::assertSame($defaultParams['password'], $loginDTO->getPassword());
+        self::assertSame($defaultParams['email'], $loginDto->getEmail());
+        self::assertSame($defaultParams['password'], $loginDto->getPassword());
     }
 
     /**
@@ -37,8 +37,8 @@ class LoginDTOTest extends TestCase
     public function providerDeErros(): array
     {
         $defaultParams = [
-            'email' => 'joao@gmail.com',
-            'password' => '123456'
+            'email'    => 'joao@gmail.com',
+            'password' => '123456',
         ];
 
         $emailNaoEnviado = $defaultParams;
@@ -52,42 +52,30 @@ class LoginDTOTest extends TestCase
         };
 
         return [
-            'fromArrayDeveFalharSeEmailNaoTiverDominio'     => [
-                'data'             => $substituirValor('email', 'joao@'),
-                'exceptionMessage' => '"email" must be a valid email',
-            ],
-            'fromArrayDeveFalharSeEmailNaoTiverPrefixo'     => [
-                'data'             => $substituirValor('email', '@gmail.com'),
-                'exceptionMessage' => '"email" must be a valid email',
-            ],
-            'fromArrayDeveFalharSeEmailForNull'     => [
+            'fromArrayDeveFalharSeEmailForNull'                       => [
                 'data'             => $substituirValor('email', null),
                 'exceptionMessage' => '"email" is required',
             ],
-            'fromArrayDeveFalharSeEmailForVazio'     => [
+            'fromArrayDeveFalharSeEmailForVazio'                      => [
                 'data'             => $substituirValor('email', ''),
-                'exceptionMessage' => '"email" must be a valid email',
+                'exceptionMessage' => '"email" is not allowed to be empty',
             ],
-            'fromArrayDeveFalharSeEmailNaoForEnviado'     => [
+            'fromArrayDeveFalharSeEmailNaoForEnviado'                 => [
                 'data'             => $emailNaoEnviado,
                 'exceptionMessage' => '"email" is required',
             ],
-            'fromArrayDeveFalharSePasswordTiverMenosDeSeisCaracteres'     => [
-                'data'             => $substituirValor('password', '12345'),
-                'exceptionMessage' => '"password" length must be at least 6 characters long',
-            ],
-            'fromArrayDeveFalharSePasswordForNull'     => [
+            'fromArrayDeveFalharSePasswordForNull'                    => [
                 'data'             => $substituirValor('password', null),
                 'exceptionMessage' => '"password" is required',
             ],
-            'fromArrayDeveFalharSePasswordForVazio'     => [
+            'fromArrayDeveFalharSePasswordForVazio'                   => [
                 'data'             => $substituirValor('password', ''),
-                'exceptionMessage' => '"password" length must be at least 6 characters long',
+                'exceptionMessage' => '"password" is not allowed to be empty',
             ],
-            'fromArrayDeveFalharSePasswordNaoForEnviado'     => [
+            'fromArrayDeveFalharSePasswordNaoForEnviado'              => [
                 'data'             => $passwordNaoEnviado,
                 'exceptionMessage' => '"password" is required',
-            ]
+            ],
         ];
     }
 }

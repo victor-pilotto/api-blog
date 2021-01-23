@@ -7,6 +7,14 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+use function file_get_contents;
+use function json_decode;
+use function json_last_error;
+use function str_contains;
+
+use const JSON_ERROR_NONE;
+use const JSON_THROW_ON_ERROR;
+
 class JsonBodyParserMiddleware implements MiddlewareInterface
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

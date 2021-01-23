@@ -4,7 +4,7 @@ namespace App\Application\Auth\Exception;
 
 use Exception;
 
-class TokenInvalido extends Exception
+class TokenInvalidoException extends Exception
 {
     public static function fromInvalido(): self
     {
