@@ -6,7 +6,7 @@ services:
 
     mysql:
       image: mysql:5.7
-      container_name: clientes-mysql
+      container_name: blog-mysql
       working_dir: /application
       volumes:
         - .:/application
@@ -20,7 +20,7 @@ services:
 
     webserver:
       image: nginx:alpine
-      container_name: clientes-webserver
+      container_name: blog-webserver
       working_dir: /application
       volumes:
           - .:/application
@@ -30,7 +30,7 @@ services:
 
     php-fpm:
       build: phpdocker/php-fpm
-      container_name: clientes-php-fpm
+      container_name: blog-php-fpm
       working_dir: /application
       volumes:
         - .:/application
