@@ -2,10 +2,13 @@
 
 use App\Application\Auth\AuthenticationInterface;
 use App\Application\Auth\JWT\Authentication;
+use App\Domain\Repository\PostRepositoryInterface;
 use App\Domain\Repository\UserRepositoryInterface;
+use App\Domain\Service\CadastrarPost;
 use App\Domain\Service\CadastrarUser;
 use App\Domain\Service\ExcluirUser;
 use App\Domain\Service\LocalizarUser;
+use App\Infrastructure\Doctrine\PostRepository;
 use App\Infrastructure\Doctrine\UserRepository;
 use DI\Container;
 use Lcobucci\JWT\Configuration;
@@ -34,10 +37,19 @@ $container->set(LocalizarUser::class, static function (Container $container) {
 $container->set(ExcluirUser::class, static function (Container $container) {
     return new ExcluirUser($container->get(UserRepositoryInterface::class));
 });
+$container->set(CadastrarPost::class, static function (Container $container) {
+    return new CadastrarPost(
+        $container->get(PostRepositoryInterface::class),
+        $container->get(UserRepositoryInterface::class)
+    );
+});
 
 // Repository
 $container->set(UserRepositoryInterface::class, static function (Container $container) {
     return new UserRepository($container->get('doctrine'));
+});
+$container->set(PostRepositoryInterface::class, static function (Container $container) {
+    return new PostRepository($container->get('doctrine'));
 });
 
 

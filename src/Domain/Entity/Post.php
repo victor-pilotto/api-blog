@@ -52,7 +52,8 @@ class Post
     /**
      * @ORM\Column(
      *     name="updated",
-     *     type="App\Domain\ValueObject\Updated"
+     *     type="App\Domain\ValueObject\Updated",
+     *     nullable=true
      * )
      */
     private ?Updated $updated;
@@ -62,4 +63,44 @@ class Post
      * @ORM\JoinColumn(name="userId", referencedColumnName="id")
      */
     private User $user;
+
+    public function title(): Title
+    {
+        return $this->title;
+    }
+
+    public function content(): Content
+    {
+        return $this->content;
+    }
+
+    public function user(): User
+    {
+        return $this->user;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'title' => $this->title()->toString(),
+            'content' => $this->content()->toString(),
+            'user' => $this->user()->id()->value()
+        ];
+    }
+
+    public static function novo(
+        Title $title,
+        Content $content,
+        User $user
+    ): self {
+        $instance = new self();
+
+        $instance->title = $title;
+        $instance->content = $content;
+        $instance->user = $user;
+        $instance->published = Published::agora();
+        $instance->updated = null;
+
+        return $instance;
+    }
 }
