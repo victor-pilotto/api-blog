@@ -31,14 +31,24 @@ class Authentication implements AuthenticationInterface
 
     public function authenticate(string $inputToken): UserId
     {
-        $token = $this->config->parser()->parse($inputToken);
-
-        $this->config->setValidationConstraints(new SignedWith($this->config->signer(), $this->config->signingKey()));
-
-        if (! $this->config->validator()->validate($token, ...$this->config->validationConstraints())) {
-            throw Exception\TokenInvalidoException::fromInvalido();
+        if (empty($inputToken)) {
+            throw Exception\TokenNaoEncontrado::execute();
         }
 
-       return UserId::fromInt($token->claims()->get('jti'));
+        try {
+            $token = $this->config->parser()->parse($inputToken);
+
+            $this->config->setValidationConstraints(new SignedWith($this->config->signer(), $this->config->signingKey()));
+
+            if (! $this->config->validator()->validate($token, ...$this->config->validationConstraints())) {
+                throw Exception\TokenInvalidoException::fromInvalido();
+            }
+
+            assert($token instanceof Token\Plain);
+
+            return UserId::fromInt($token->claims()->get('jti'));
+        } catch (\Exception $e) {
+            throw Exception\TokenInvalidoException::fromInvalido();
+        }
     }
 }

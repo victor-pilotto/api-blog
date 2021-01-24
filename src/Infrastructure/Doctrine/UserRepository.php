@@ -23,6 +23,10 @@ class UserRepository implements UserRepositoryInterface
         $this->entityManager->flush();
     }
 
+    public function findAll(): array
+    {
+        return $this->entityManager->getRepository(User::class)->findAll();
+    }
     public function findByEmail(Email $email): ?User
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
@@ -39,4 +43,6 @@ class UserRepository implements UserRepositoryInterface
 
         return $user instanceof User ? $user : null;
     }
+
+
 }

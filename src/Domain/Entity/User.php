@@ -70,6 +70,31 @@ class User
         return $this->id;
     }
 
+    public function displayName(): DisplayName
+    {
+        return $this->displayName;
+    }
+
+    public function email(): Email
+    {
+        return $this->email;
+    }
+
+    public function image(): Image
+    {
+        return $this->image;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id()->value(),
+            'displayName' => $this->displayName()->toString(),
+            'email' => $this->email()->toString(),
+            'image' => $this->image()->toString()
+        ];
+    }
+
     public static function novo(
         DisplayName $displayName,
         Email $email,
