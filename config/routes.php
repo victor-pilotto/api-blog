@@ -1,5 +1,6 @@
 <?php
 
+use App\Application\Rest\BuscaPostAction;
 use App\Application\Rest\BuscaUserAction;
 use App\Application\Rest\CadastraPostAction;
 use App\Application\Rest\CadastraUserAction;
@@ -24,3 +25,4 @@ $app->delete('/user/me', new ExcluiUserAction($container));
 
 $app->post('/post', new CadastraPostAction($container));
 $app->get('/post', new ListaPostsAction($container));
+$app->get('/post/{id}', new BuscaPostAction($container));

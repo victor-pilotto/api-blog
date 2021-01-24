@@ -8,6 +8,7 @@ use App\Application\Handlers\DomainExceptionHandler;
 use App\Application\Handlers\InvalidArgumentExceptionHandler;
 use App\Application\Handlers\NotFoundHandler;
 use App\Application\Handlers\UnauthorizedHandler;
+use App\Domain\Exception\PostNaoExisteException;
 use App\Domain\Exception\UserNaoExisteException;
 use Slim\Factory\AppFactory;
 
@@ -44,5 +45,6 @@ $errorMiddleware->setErrorHandler( DomainException::class, $domainExceptionHandl
 $errorMiddleware->setErrorHandler( TokenNaoEncontrado::class, $unauthorizedHandler);
 $errorMiddleware->setErrorHandler( TokenInvalidoException::class, $unauthorizedHandler);
 $errorMiddleware->setErrorHandler( UserNaoExisteException::class, $notFoundHandler);
+$errorMiddleware->setErrorHandler( PostNaoExisteException::class, $notFoundHandler);
 
 require_once __DIR__ . '/config/routes.php';
