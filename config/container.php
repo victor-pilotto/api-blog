@@ -4,6 +4,7 @@ use App\Application\Auth\AuthenticationInterface;
 use App\Application\Auth\JWT\Authentication;
 use App\Domain\Repository\PostRepositoryInterface;
 use App\Domain\Repository\UserRepositoryInterface;
+use App\Domain\Service\AtualizarPost;
 use App\Domain\Service\CadastrarPost;
 use App\Domain\Service\CadastrarUser;
 use App\Domain\Service\ExcluirUser;
@@ -39,6 +40,12 @@ $container->set(ExcluirUser::class, static function (Container $container) {
 });
 $container->set(CadastrarPost::class, static function (Container $container) {
     return new CadastrarPost(
+        $container->get(PostRepositoryInterface::class),
+        $container->get(UserRepositoryInterface::class)
+    );
+});
+$container->set(AtualizarPost::class, static function (Container $container) {
+    return new AtualizarPost(
         $container->get(PostRepositoryInterface::class),
         $container->get(UserRepositoryInterface::class)
     );

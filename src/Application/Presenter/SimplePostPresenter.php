@@ -4,7 +4,7 @@ namespace App\Application\Presenter;
 
 use App\Domain\Entity\Post;
 
-class CadastraPostPresenter
+class SimplePostPresenter
 {
     public static function format(Post $post): array
     {

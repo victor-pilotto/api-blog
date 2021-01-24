@@ -2,7 +2,6 @@
 
 namespace App\Infrastructure\DbalType;
 
-use App\Domain\ValueObject\Published;
 use App\Domain\ValueObject\Updated;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\DateTimeImmutableType;
@@ -13,7 +12,7 @@ final class UpdatedType extends DateTimeImmutableType
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return $value ? Published::fromString($value) : null;
+        return $value ? Updated::fromString($value) : null;
     }
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform)

@@ -9,6 +9,7 @@ use App\Application\Handlers\InvalidArgumentExceptionHandler;
 use App\Application\Handlers\NotFoundHandler;
 use App\Application\Handlers\UnauthorizedHandler;
 use App\Domain\Exception\PostNaoExisteException;
+use App\Domain\Exception\UserNaoAutorizadoException;
 use App\Domain\Exception\UserNaoExisteException;
 use Slim\Factory\AppFactory;
 
@@ -44,6 +45,7 @@ $errorMiddleware->setErrorHandler( InvalidArgumentException::class, $invalidArgu
 $errorMiddleware->setErrorHandler( DomainException::class, $domainExceptionHandler, true);
 $errorMiddleware->setErrorHandler( TokenNaoEncontrado::class, $unauthorizedHandler);
 $errorMiddleware->setErrorHandler( TokenInvalidoException::class, $unauthorizedHandler);
+$errorMiddleware->setErrorHandler( UserNaoAutorizadoException::class, $unauthorizedHandler);
 $errorMiddleware->setErrorHandler( UserNaoExisteException::class, $notFoundHandler);
 $errorMiddleware->setErrorHandler( PostNaoExisteException::class, $notFoundHandler);
 

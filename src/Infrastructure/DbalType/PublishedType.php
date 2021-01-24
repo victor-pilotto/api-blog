@@ -4,9 +4,9 @@ namespace App\Infrastructure\DbalType;
 
 use App\Domain\ValueObject\Published;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\StringType;
+use Doctrine\DBAL\Types\DateTimeImmutableType;
 
-final class PublishedType extends StringType
+final class PublishedType extends DateTimeImmutableType
 {
     public const NAME = Published::class;
 
@@ -18,8 +18,9 @@ final class PublishedType extends StringType
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         if ($value instanceof Published) {
-            return $value->value()->format('Y-m-d H:i:s');
+            return $value->format($platform->getDateTimeFormatString());
         }
+
         return $value;
     }
 

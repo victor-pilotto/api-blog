@@ -56,7 +56,7 @@ class Post
      *     nullable=true
      * )
      */
-    private ?Updated $updated = null;
+    private ?Updated $updated;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
@@ -120,5 +120,14 @@ class Post
         $instance->updated = null;
 
         return $instance;
+    }
+
+    public function atualiza(
+        Title $title,
+        Content $content,
+    ): void {
+        $this->title = $title;
+        $this->content = $content;
+        $this->updated = Updated::agora();
     }
 }
