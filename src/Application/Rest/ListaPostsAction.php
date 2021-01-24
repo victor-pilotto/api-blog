@@ -4,14 +4,13 @@ namespace App\Application\Rest;
 
 use App\Application\Auth\AuthenticationInterface;
 use App\Application\Auth\HeaderToken;
-use App\Application\Presenter\CadastraPostPresenter;
-use App\Domain\DTO\CadastraPostDTO;
-use App\Domain\Service\CadastrarPost;
+use App\Domain\Entity\Post;
+use App\Domain\Repository\PostRepositoryInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class CadastraPostAction
+class ListaPostsAction
 {
     private ContainerInterface $container;
 
@@ -24,17 +23,16 @@ class CadastraPostAction
     {
         /** @var AuthenticationInterface $authentication */
         $authentication = $this->container->get(AuthenticationInterface::class);
-        $userId = $authentication->authenticate(HeaderToken::get());
+        $authentication->authenticate(HeaderToken::get());
 
-        $params = $request->getParsedBody();
-        $cadastraPostDto = CadastraPostDTO::fromArray(array_merge($params, ['userId' => $userId]));
+        /** @var PostRepositoryInterface $postRepository */
+        $postRepository = $this->container->get(PostRepositoryInterface::class);
+        $posts = $postRepository->findAll();
 
-        /** @var CadastrarPost $cadastrarPost */
-        $cadastrarPost = $this->container->get(CadastrarPost::class);
-        $post = $cadastrarPost->cadastrar($cadastraPostDto);
+        $posts = array_map(static fn (Post $post) => $post->jsonSerialize(), $posts);
 
-        $response->getBody()->write(json_encode(CadastraPostPresenter::format($post), JSON_THROW_ON_ERROR));
+        $response->getBody()->write(json_encode($posts, JSON_THROW_ON_ERROR));
         return $response
-            ->withStatus(201);
+            ->withStatus(200);
     }
 }

@@ -56,13 +56,18 @@ class Post
      *     nullable=true
      * )
      */
-    private ?Updated $updated;
+    private ?Updated $updated = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="userId", referencedColumnName="id")
      */
     private User $user;
+
+    public function id(): PostId
+    {
+        return $this->id;
+    }
 
     public function title(): Title
     {
@@ -74,6 +79,16 @@ class Post
         return $this->content;
     }
 
+    public function published(): Published
+    {
+        return $this->published;
+    }
+
+    public function updated(): ?Updated
+    {
+        return $this->updated;
+    }
+
     public function user(): User
     {
         return $this->user;
@@ -82,9 +97,12 @@ class Post
     public function jsonSerialize(): array
     {
         return [
+            'id' => $this->id()->value(),
+            'published' => $this->published()->value()->format('Y-m-d H:i:s'),
+            'updated' => $this->updated() ? $this->updated()->value()->format('Y-m-d H:i:s') : null,
             'title' => $this->title()->toString(),
             'content' => $this->content()->toString(),
-            'user' => $this->user()->id()->value()
+            'user' => $this->user()->jsonSerialize()
         ];
     }
 

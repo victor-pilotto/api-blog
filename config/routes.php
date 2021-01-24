@@ -5,6 +5,7 @@ use App\Application\Rest\CadastraPostAction;
 use App\Application\Rest\CadastraUserAction;
 use App\Application\Middleware;
 use App\Application\Rest\ExcluiUserAction;
+use App\Application\Rest\ListaPostsAction;
 use App\Application\Rest\ListaUsersAction;
 use App\Application\Rest\LoginAction;
 use DI\Container;
@@ -22,3 +23,4 @@ $app->get('/user/{id}', new BuscaUserAction($container));
 $app->delete('/user/me', new ExcluiUserAction($container));
 
 $app->post('/post', new CadastraPostAction($container));
+$app->get('/post', new ListaPostsAction($container));
