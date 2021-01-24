@@ -6,7 +6,9 @@ use App\Domain\Entity\User;
 use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\ValueObject\Email;
 use App\Domain\ValueObject\Password;
+use App\Domain\ValueObject\UserId;
 use Doctrine\ORM\EntityManager;
+use App\Domain\Exception;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -27,6 +29,18 @@ class UserRepository implements UserRepositoryInterface
     {
         return $this->entityManager->getRepository(User::class)->findAll();
     }
+
+    public function getById(UserId $id): User
+    {
+        $user = $this->entityManager->getRepository(User::class)->find($id);
+
+        if ($user instanceof User) {
+            return $user;
+        }
+
+        throw Exception\UserNaoExisteException::execute();
+    }
+
     public function findByEmail(Email $email): ?User
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
@@ -43,6 +57,7 @@ class UserRepository implements UserRepositoryInterface
 
         return $user instanceof User ? $user : null;
     }
+
 
 
 }

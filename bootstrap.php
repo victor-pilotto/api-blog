@@ -6,7 +6,9 @@ use App\Application\Auth\Exception\TokenInvalidoException;
 use App\Application\Auth\Exception\TokenNaoEncontrado;
 use App\Application\Handlers\DomainExceptionHandler;
 use App\Application\Handlers\InvalidArgumentExceptionHandler;
+use App\Application\Handlers\NotFoundHandler;
 use App\Application\Handlers\UnauthorizedHandler;
+use App\Domain\Exception\UserNaoExisteException;
 use Slim\Factory\AppFactory;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -31,11 +33,16 @@ $unauthorizedHandler = new UnauthorizedHandler(
     $app->getCallableResolver(),
     $app->getResponseFactory()
 );
+$notFoundHandler = new NotFoundHandler(
+    $app->getCallableResolver(),
+    $app->getResponseFactory()
+);
 
 $errorMiddleware = $app->addErrorMiddleware(getenv('APP') !== 'prod', true, true);
 $errorMiddleware->setErrorHandler( InvalidArgumentException::class, $invalidArgumentExceptionHandler, true);
 $errorMiddleware->setErrorHandler( DomainException::class, $domainExceptionHandler, true);
 $errorMiddleware->setErrorHandler( TokenNaoEncontrado::class, $unauthorizedHandler);
 $errorMiddleware->setErrorHandler( TokenInvalidoException::class, $unauthorizedHandler);
+$errorMiddleware->setErrorHandler( UserNaoExisteException::class, $notFoundHandler);
 
 require_once __DIR__ . '/config/routes.php';
