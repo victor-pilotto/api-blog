@@ -2,7 +2,9 @@
 
 namespace App\Domain\Exception;
 
-class PostNaoExisteException extends \Exception
+use Exception;
+
+class PostNaoExisteException extends Exception
 {
     public static function execute(): self
     {

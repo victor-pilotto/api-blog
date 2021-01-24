@@ -22,7 +22,8 @@
         <exclude name="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
         <exclude name="WebimpressCodingStandard.PHP.ImportInternalConstant"/>
         <exclude name="WebimpressCodingStandard.PHP.ImportInternalFunction"/>
-<!--        <exclude name="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFallbackGlobalName"/>-->
+        <exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact"/>
+        <exclude name="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFallbackGlobalName"/>
         <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.UselessAnnotation"/>
     </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint">

@@ -27,7 +27,7 @@ class ListaPostsAction
 
         /** @var PostRepositoryInterface $postRepository */
         $postRepository = $this->container->get(PostRepositoryInterface::class);
-        $posts = $postRepository->findAll();
+        $posts          = $postRepository->findAll();
 
         $posts = array_map(static fn (Post $post) => $post->jsonSerialize(), $posts);
 

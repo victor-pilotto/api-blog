@@ -22,7 +22,7 @@ class LoginAction
     {
         $params = $request->getParsedBody();
 
-        $loginDto = LoginDTO::fromArray((array)$params);
+        $loginDto = LoginDTO::fromArray((array) $params);
 
         /** @var LocalizarUser $localizarUser */
         $localizarUser = $this->container->get(LocalizarUser::class);

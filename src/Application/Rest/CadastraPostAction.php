@@ -24,14 +24,14 @@ class CadastraPostAction
     {
         /** @var AuthenticationInterface $authentication */
         $authentication = $this->container->get(AuthenticationInterface::class);
-        $userId = $authentication->authenticate(HeaderToken::get());
+        $user           = $authentication->authenticate(HeaderToken::get());
 
-        $params = $request->getParsedBody();
-        $cadastraPostDto = CadastraPostDTO::fromArray(array_merge($params, ['userId' => $userId]));
+        $params          = $request->getParsedBody();
+        $cadastraPostDto = CadastraPostDTO::fromArray(array_merge((array) $params, ['user' => $user]));
 
         /** @var CadastrarPost $cadastrarPost */
         $cadastrarPost = $this->container->get(CadastrarPost::class);
-        $post = $cadastrarPost->cadastrar($cadastraPostDto);
+        $post          = $cadastrarPost->cadastrar($cadastraPostDto);
 
         $response->getBody()->write(json_encode(SimplePostPresenter::format($post), JSON_THROW_ON_ERROR));
         return $response

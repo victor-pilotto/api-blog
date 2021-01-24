@@ -4,7 +4,7 @@ namespace App\Application\Auth\Exception;
 
 use Exception;
 
-class TokenNaoEncontrado extends Exception
+class TokenNaoEncontradoException extends Exception
 {
     public static function execute(): self
     {

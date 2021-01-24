@@ -2,8 +2,8 @@
 
 namespace Test\Domain\DTO;
 
-use App\Domain\DTO\AtualizaDTO;
-use App\Domain\ValueObject\UserId;
+use App\Domain\DTO\AtualizaPostDTO;
+use App\Domain\Entity\User;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
@@ -12,20 +12,20 @@ class AtualizaDTOTest extends TestCase
     /** @test */
     public function fromArrayDeveFuncionar(): void
     {
-        $userId = UserId::fromInt(random_int(1, 999));
+        $user          = $this->getMockBuilder(User::class)->disableOriginalConstructor()->getMock();
         $defaultParams = [
-            'postId' => random_int(1, 999),
-            'title'    => 'Latest updates, August 1st',
+            'postId'  => random_int(1, 999),
+            'title'   => 'Latest updates, August 1st',
             'content' => 'The whole text for the blog post goes here in this key',
-            'userId' => $userId
+            'user'    => $user,
         ];
 
-        $cadastraPostDto = AtualizaDTO::fromArray($defaultParams);
+        $cadastraPostDto = AtualizaPostDTO::fromArray($defaultParams);
 
         self::assertSame($defaultParams['postId'], $cadastraPostDto->getPostId());
         self::assertSame($defaultParams['title'], $cadastraPostDto->getTitle());
         self::assertSame($defaultParams['content'], $cadastraPostDto->getContent());
-        self::assertSame($userId, $cadastraPostDto->getUserId());
+        self::assertSame($user, $cadastraPostDto->getUser());
     }
 
     /**
@@ -37,16 +37,16 @@ class AtualizaDTOTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($exception);
 
-        AtualizaDTO::fromArray($data);
+        AtualizaPostDTO::fromArray($data);
     }
 
     public function providerDeErros(): array
     {
         $defaultParams = [
-            'postId' => random_int(1, 999),
-            'title'    => 'Latest updates, August 1st',
+            'postId'  => random_int(1, 999),
+            'title'   => 'Latest updates, August 1st',
             'content' => 'The whole text for the blog post goes here in this key',
-            'userId' => UserId::fromInt(random_int(1, 999))
+            'userId'  => $this->getMockBuilder(User::class)->disableOriginalConstructor()->getMock(),
         ];
 
         $titleNaoEnviado = $defaultParams;
@@ -60,35 +60,35 @@ class AtualizaDTOTest extends TestCase
         };
 
         return [
-            'fromArrayDeveFalharSePostIdDoTipoErrado'                 => [
+            'fromArrayDeveFalharSePostIdDoTipoErrado'   => [
                 'data'             => $substituirValor('postId', 'string'),
                 'exceptionMessage' => '"postId" needs to be integer',
             ],
-            'fromArrayDeveFalharSePostIdForNull'                 => [
+            'fromArrayDeveFalharSePostIdForNull'        => [
                 'data'             => $substituirValor('postId', null),
                 'exceptionMessage' => '"postId" needs to be integer',
             ],
-            'fromArrayDeveFalharSeTitleForNull'                       => [
+            'fromArrayDeveFalharSeTitleForNull'         => [
                 'data'             => $substituirValor('title', null),
                 'exceptionMessage' => '"title" is required',
             ],
-            'fromArrayDeveFalharSeTitleForVazio'                      => [
+            'fromArrayDeveFalharSeTitleForVazio'        => [
                 'data'             => $substituirValor('title', ''),
                 'exceptionMessage' => '"title" is required',
             ],
-            'fromArrayDeveFalharSeTitleNaoForEnviado'                 => [
+            'fromArrayDeveFalharSeTitleNaoForEnviado'   => [
                 'data'             => $titleNaoEnviado,
                 'exceptionMessage' => '"title" is required',
             ],
-            'fromArrayDeveFalharSeContentForNull'                    => [
+            'fromArrayDeveFalharSeContentForNull'       => [
                 'data'             => $substituirValor('content', null),
                 'exceptionMessage' => '"content" is required',
             ],
-            'fromArrayDeveFalharSeContentForVazio'                   => [
+            'fromArrayDeveFalharSeContentForVazio'      => [
                 'data'             => $substituirValor('content', ''),
                 'exceptionMessage' => '"content" is required',
             ],
-            'fromArrayDeveFalharSeContentNaoForEnviado'              => [
+            'fromArrayDeveFalharSeContentNaoForEnviado' => [
                 'data'             => $contentNaoEnviado,
                 'exceptionMessage' => '"content" is required',
             ],

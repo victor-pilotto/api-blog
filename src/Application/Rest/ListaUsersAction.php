@@ -27,7 +27,7 @@ class ListaUsersAction
 
         /** @var UserRepositoryInterface $userRepository */
         $userRepository = $this->container->get(UserRepositoryInterface::class);
-        $users = $userRepository->findAll();
+        $users          = $userRepository->findAll();
 
         $users = array_map(static fn (User $user) => $user->jsonSerialize(), $users);
 

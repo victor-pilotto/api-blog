@@ -6,8 +6,6 @@ use App\Domain\DTO\CadastraUserDTO;
 use InvalidArgumentException;
 use PHPStan\Testing\TestCase;
 
-use function array_merge;
-
 class CadastraUserDTOTest extends TestCase
 {
     /** @test */

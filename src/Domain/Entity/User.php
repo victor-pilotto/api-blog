@@ -80,7 +80,7 @@ class User
         return $this->email;
     }
 
-    public function image(): Image
+    public function image(): ?Image
     {
         return $this->image;
     }
@@ -88,10 +88,10 @@ class User
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id()->value(),
+            'id'          => $this->id()->value(),
             'displayName' => $this->displayName()->toString(),
-            'email' => $this->email()->toString(),
-            'image' => $this->image()->toString()
+            'email'       => $this->email()->toString(),
+            'image'       => $this->image() !== null ? $this->image()->toString() : null,
         ];
     }
 

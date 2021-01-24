@@ -2,16 +2,16 @@
 
 namespace App\Domain\DTO;
 
-use App\Domain\ValueObject\UserId;
+use App\Domain\Entity\User;
 use Assert\Assertion;
 
-class AtualizaDTO
+class AtualizaPostDTO
 {
     private function __construct(
         private int $postId,
         private string $title,
         private string $content,
-        private UserId $userId
+        private User $user
     ) {
     }
 
@@ -30,9 +30,9 @@ class AtualizaDTO
         return $this->content;
     }
 
-    public function getUserId(): UserId
+    public function getUser(): User
     {
-        return $this->userId;
+        return $this->user;
     }
 
     public static function fromArray(array $params): self
@@ -49,7 +49,7 @@ class AtualizaDTO
             $params['postId'],
             $params['title'],
             $params['content'],
-            $params['userId']
+            $params['user']
         );
     }
 }

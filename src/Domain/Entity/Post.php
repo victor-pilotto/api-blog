@@ -97,12 +97,12 @@ class Post
     public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id()->value(),
+            'id'        => $this->id()->value(),
             'published' => $this->published()->value()->format('Y-m-d H:i:s'),
-            'updated' => $this->updated() ? $this->updated()->value()->format('Y-m-d H:i:s') : null,
-            'title' => $this->title()->toString(),
-            'content' => $this->content()->toString(),
-            'user' => $this->user()->jsonSerialize()
+            'updated'   => $this->updated() !== null ? $this->updated()->value()->format('Y-m-d H:i:s') : null,
+            'title'     => $this->title()->toString(),
+            'content'   => $this->content()->toString(),
+            'user'      => $this->user()->jsonSerialize(),
         ];
     }
 
@@ -113,11 +113,11 @@ class Post
     ): self {
         $instance = new self();
 
-        $instance->title = $title;
-        $instance->content = $content;
-        $instance->user = $user;
+        $instance->title     = $title;
+        $instance->content   = $content;
+        $instance->user      = $user;
         $instance->published = Published::agora();
-        $instance->updated = null;
+        $instance->updated   = null;
 
         return $instance;
     }
@@ -126,7 +126,7 @@ class Post
         Title $title,
         Content $content,
     ): void {
-        $this->title = $title;
+        $this->title   = $title;
         $this->content = $content;
         $this->updated = Updated::agora();
     }

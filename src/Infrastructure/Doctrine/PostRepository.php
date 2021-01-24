@@ -24,6 +24,12 @@ class PostRepository implements PostRepositoryInterface
         $this->entityManager->flush();
     }
 
+    public function remove(Post $post): void
+    {
+        $this->entityManager->remove($post);
+        $this->entityManager->flush();
+    }
+
     public function findAll(): array
     {
         return $this->entityManager->getRepository(Post::class)->findAll();
@@ -40,7 +46,7 @@ class PostRepository implements PostRepositoryInterface
         throw Exception\PostNaoExisteException::execute();
     }
 
-    public function findByBuscaPostPorFiltroDto(BuscaPostPorFiltroDTO $buscaPostPorFiltroDTO): array
+    public function findByBuscaPostPorFiltroDto(BuscaPostPorFiltroDTO $buscaPostPorFiltroDto): array
     {
         $queryBuilder = $this->entityManager->createQueryBuilder();
 
@@ -50,7 +56,8 @@ class PostRepository implements PostRepositoryInterface
             ->where('p.title LIKE :query')
             ->orWhere('p.content LIKE :query')
             ->setParameter(
-                'query','%' . $buscaPostPorFiltroDTO->getQueryParams() . '%',
+                'query',
+                '%' . $buscaPostPorFiltroDto->getQueryParams() . '%',
             );
 
         return $queryBuilder->getQuery()->execute();

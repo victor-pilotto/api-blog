@@ -6,12 +6,8 @@ use App\Application\Auth\AuthenticationInterface;
 use App\Domain\DTO\CadastraUserDTO;
 use App\Domain\Service\CadastrarUser;
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-
-use function json_encode;
-
-use const JSON_THROW_ON_ERROR;
+use Psr\Http\Message\ServerRequestInterface;
 
 class CadastraUserAction
 {
@@ -26,7 +22,7 @@ class CadastraUserAction
     {
         $params = $request->getParsedBody();
 
-        $cadastraUserDto = CadastraUserDTO::fromArray((array)$params);
+        $cadastraUserDto = CadastraUserDTO::fromArray((array) $params);
 
         /** @var CadastrarUser $cadastrarUser */
         $cadastrarUser = $this->container->get(CadastrarUser::class);

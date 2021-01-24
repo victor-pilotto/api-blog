@@ -22,11 +22,11 @@ class ExcluiUserAction
     {
         /** @var AuthenticationInterface $authentication */
         $authentication = $this->container->get(AuthenticationInterface::class);
-        $userId = $authentication->authenticate(HeaderToken::get());
+        $user           = $authentication->authenticate(HeaderToken::get());
 
         /** @var ExcluirUser $excluirUser */
         $excluirUser = $this->container->get(ExcluirUser::class);
-        $excluirUser->excluir($userId);
+        $excluirUser->excluir($user);
 
         return $response
             ->withStatus(204);

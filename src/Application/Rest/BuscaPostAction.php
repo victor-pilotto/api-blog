@@ -27,7 +27,7 @@ class BuscaPostAction
 
         /** @var PostRepositoryInterface $postRepository */
         $postRepository = $this->container->get(PostRepositoryInterface::class);
-        $post = $postRepository->getById(PostId::fromInt($request->getAttribute('id')));
+        $post           = $postRepository->getById(PostId::fromInt($request->getAttribute('id')));
 
         $response->getBody()->write(json_encode($post->jsonSerialize(), JSON_THROW_ON_ERROR));
         return $response

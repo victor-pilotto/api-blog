@@ -3,7 +3,7 @@
 namespace Test\Domain\DTO;
 
 use App\Domain\DTO\CadastraPostDTO;
-use App\Domain\ValueObject\UserId;
+use App\Domain\Entity\User;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
@@ -12,18 +12,18 @@ class CadastraPostDTOTest extends TestCase
     /** @test */
     public function fromArrayDeveFuncionar(): void
     {
-        $userId = UserId::fromInt(random_int(1, 999));
+        $user          = $this->getMockBuilder(User::class)->disableOriginalConstructor()->getMock();
         $defaultParams = [
-            'title'    => 'Latest updates, August 1st',
+            'title'   => 'Latest updates, August 1st',
             'content' => 'The whole text for the blog post goes here in this key',
-            'userId' => $userId
+            'user'    => $user,
         ];
 
         $cadastraPostDto = CadastraPostDTO::fromArray($defaultParams);
 
         self::assertSame($defaultParams['title'], $cadastraPostDto->getTitle());
         self::assertSame($defaultParams['content'], $cadastraPostDto->getContent());
-        self::assertSame($userId, $cadastraPostDto->getUserId());
+        self::assertSame($user, $cadastraPostDto->getUser());
     }
 
     /**
@@ -41,9 +41,9 @@ class CadastraPostDTOTest extends TestCase
     public function providerDeErros(): array
     {
         $defaultParams = [
-            'title'    => 'Latest updates, August 1st',
+            'title'   => 'Latest updates, August 1st',
             'content' => 'The whole text for the blog post goes here in this key',
-            'userId' => UserId::fromInt(random_int(1, 999))
+            'user'    => $this->getMockBuilder(User::class)->disableOriginalConstructor()->getMock(),
         ];
 
         $titleNaoEnviado = $defaultParams;
@@ -57,27 +57,27 @@ class CadastraPostDTOTest extends TestCase
         };
 
         return [
-            'fromArrayDeveFalharSeTitleForNull'                       => [
+            'fromArrayDeveFalharSeTitleForNull'         => [
                 'data'             => $substituirValor('title', null),
                 'exceptionMessage' => '"title" is required',
             ],
-            'fromArrayDeveFalharSeTitleForVazio'                      => [
+            'fromArrayDeveFalharSeTitleForVazio'        => [
                 'data'             => $substituirValor('title', ''),
                 'exceptionMessage' => '"title" is required',
             ],
-            'fromArrayDeveFalharSeTitleNaoForEnviado'                 => [
+            'fromArrayDeveFalharSeTitleNaoForEnviado'   => [
                 'data'             => $titleNaoEnviado,
                 'exceptionMessage' => '"title" is required',
             ],
-            'fromArrayDeveFalharSeContentForNull'                    => [
+            'fromArrayDeveFalharSeContentForNull'       => [
                 'data'             => $substituirValor('content', null),
                 'exceptionMessage' => '"content" is required',
             ],
-            'fromArrayDeveFalharSeContentForVazio'                   => [
+            'fromArrayDeveFalharSeContentForVazio'      => [
                 'data'             => $substituirValor('content', ''),
                 'exceptionMessage' => '"content" is required',
             ],
-            'fromArrayDeveFalharSeContentNaoForEnviado'              => [
+            'fromArrayDeveFalharSeContentNaoForEnviado' => [
                 'data'             => $contentNaoEnviado,
                 'exceptionMessage' => '"content" is required',
             ],

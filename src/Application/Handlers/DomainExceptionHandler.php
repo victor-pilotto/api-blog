@@ -7,10 +7,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Handlers\ErrorHandler;
 use Throwable;
 
-use function json_encode;
-
-use const JSON_UNESCAPED_UNICODE;
-
 class DomainExceptionHandler extends ErrorHandler
 {
     public function __invoke(

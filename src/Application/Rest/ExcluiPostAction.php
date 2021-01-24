@@ -4,14 +4,13 @@ namespace App\Application\Rest;
 
 use App\Application\Auth\AuthenticationInterface;
 use App\Application\Auth\HeaderToken;
-use App\Application\Presenter\SimplePostPresenter;
-use App\Domain\DTO\AtualizaPostDTO;
-use App\Domain\Service\AtualizarPost;
+use App\Domain\DTO\ExcluiPostDTO;
+use App\Domain\Service\ExcluirPost;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class AtualizaPostAction
+class ExcluiPostAction
 {
     private ContainerInterface $container;
 
@@ -26,18 +25,16 @@ class AtualizaPostAction
         $authentication = $this->container->get(AuthenticationInterface::class);
         $user           = $authentication->authenticate(HeaderToken::get());
 
-        $params          = $request->getParsedBody();
-        $atualizaPostDto = AtualizaPostDTO::fromArray(array_merge(
-            (array) $params,
-            ['user' => $user, 'postId' => (int) $request->getAttribute('id')]
-        ));
+        $excluiDto = ExcluiPostDTO::fromArray([
+            'user'   => $user,
+            'postId' => (int) $request->getAttribute('id'),
+        ]);
 
-        /** @var AtualizarPost $atualizarPost */
-        $atualizarPost = $this->container->get(AtualizarPost::class);
-        $post          = $atualizarPost->atualizar($atualizaPostDto);
+        /** @var ExcluirPost $excluirPost */
+        $excluirPost = $this->container->get(ExcluirPost::class);
+        $excluirPost->excluir($excluiDto);
 
-        $response->getBody()->write(json_encode(SimplePostPresenter::format($post), JSON_THROW_ON_ERROR));
         return $response
-            ->withStatus(200);
+            ->withStatus(204);
     }
 }

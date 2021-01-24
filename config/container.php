@@ -21,9 +21,10 @@ $container = new Container();
 
 require_once __DIR__ . '/database.php';
 
-$container->set(AuthenticationInterface::class, static function () {
+$container->set(AuthenticationInterface::class, static function (Container $container) {
     return new Authentication(
-        Configuration::forSymmetricSigner(new Sha256(), InMemory::plainText(getenv('AUTH_TOKEN_SIGNER_KEY')))
+        Configuration::forSymmetricSigner(new Sha256(), InMemory::plainText(getenv('AUTH_TOKEN_SIGNER_KEY'))),
+        $container->get(UserRepositoryInterface::class)
     );
 });
 
@@ -40,14 +41,12 @@ $container->set(ExcluirUser::class, static function (Container $container) {
 });
 $container->set(CadastrarPost::class, static function (Container $container) {
     return new CadastrarPost(
-        $container->get(PostRepositoryInterface::class),
-        $container->get(UserRepositoryInterface::class)
+        $container->get(PostRepositoryInterface::class)
     );
 });
 $container->set(AtualizarPost::class, static function (Container $container) {
     return new AtualizarPost(
-        $container->get(PostRepositoryInterface::class),
-        $container->get(UserRepositoryInterface::class)
+        $container->get(PostRepositoryInterface::class)
     );
 });
 

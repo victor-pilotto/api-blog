@@ -27,7 +27,7 @@ class BuscaUserAction
 
         /** @var UserRepositoryInterface $userRepository */
         $userRepository = $this->container->get(UserRepositoryInterface::class);
-        $user = $userRepository->getById(UserId::fromInt($request->getAttribute('id')));
+        $user           = $userRepository->getById(UserId::fromInt($request->getAttribute('id')));
 
         $response->getBody()->write(json_encode($user->jsonSerialize(), JSON_THROW_ON_ERROR));
         return $response

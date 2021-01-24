@@ -2,8 +2,6 @@
 
 namespace App\Domain\ValueObject;
 
-use function md5;
-
 final class Password
 {
     private string $password;

@@ -3,12 +3,12 @@
 namespace App\Infrastructure\Doctrine;
 
 use App\Domain\Entity\User;
+use App\Domain\Exception;
 use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\ValueObject\Email;
 use App\Domain\ValueObject\Password;
 use App\Domain\ValueObject\UserId;
 use Doctrine\ORM\EntityManager;
-use App\Domain\Exception;
 
 class UserRepository implements UserRepositoryInterface
 {

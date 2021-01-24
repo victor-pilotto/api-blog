@@ -10,9 +10,11 @@ interface PostRepositoryInterface
 {
     public function store(Post $post): void;
 
+    public function remove(Post $post): void;
+
     public function findAll(): array;
 
     public function getById(PostId $id): Post;
 
-    public function findByBuscaPostPorFiltroDto(BuscaPostPorFiltroDTO $buscaPostPorFiltroDTO): array;
+    public function findByBuscaPostPorFiltroDto(BuscaPostPorFiltroDTO $buscaPostPorFiltroDto): array;
 }

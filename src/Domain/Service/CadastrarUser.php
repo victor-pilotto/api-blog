@@ -25,7 +25,6 @@ class CadastrarUser
         $email = Email::fromString($cadastraUserDto->getEmail());
         $this->verificaSeUsuarioExiste($email);
 
-
         $user = User::novo(
             DisplayName::fromString($cadastraUserDto->getDisplayName()),
             $email,

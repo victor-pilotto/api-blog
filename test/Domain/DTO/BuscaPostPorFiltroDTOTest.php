@@ -22,7 +22,7 @@ class BuscaPostPorFiltroDTOTest extends TestCase
     public function providerDeSucessos(): array
     {
         $defaultParams = [
-            'q'    => null,
+            'q' => null,
         ];
 
         $substituirValor = static function ($chave, $valor) use ($defaultParams) {
@@ -30,14 +30,14 @@ class BuscaPostPorFiltroDTOTest extends TestCase
         };
 
         return [
-            'fromArrayDeveFuncionarComValorNull'                       => [
-                'data'             => $substituirValor('q', null)
+            'fromArrayDeveFuncionarComValorNull'  => [
+                'data' => $substituirValor('q', null),
             ],
-            'fromArrayDeveFuncionarComValorVazio'                      => [
-                'data'             => $substituirValor('q', '')
+            'fromArrayDeveFuncionarComValorVazio' => [
+                'data' => $substituirValor('q', ''),
             ],
-            'fromArrayDeveFuncionar'                 => [
-                'data'             => $defaultParams,
+            'fromArrayDeveFuncionar'              => [
+                'data' => $defaultParams,
             ],
         ];
     }
@@ -45,7 +45,7 @@ class BuscaPostPorFiltroDTOTest extends TestCase
     public function fromArrayDeveFuncionarValorEmBranco(): void
     {
         $defaultParams = [
-            'q'    => '',
+            'q' => '',
         ];
 
         $buscaPostPorFiltroDto = BuscaPostPorFiltroDTO::fromArray($defaultParams);
@@ -68,7 +68,7 @@ class BuscaPostPorFiltroDTOTest extends TestCase
     public function providerDeErros(): array
     {
         return [
-            'fromArrayDeveFalharSeEmailNaoForEnviado'                 => [
+            'fromArrayDeveFalharSeEmailNaoForEnviado' => [
                 'data'             => [],
                 'exceptionMessage' => '"q" is required',
             ],

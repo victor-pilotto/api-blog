@@ -2,16 +2,14 @@
 
 namespace App\Domain\Service;
 
-use App\Domain\DTO\AtualizaPostDTO;
+use App\Domain\DTO\ExcluiPostDTO;
 use App\Domain\Entity\Post;
 use App\Domain\Entity\User;
 use App\Domain\Exception;
 use App\Domain\Repository\PostRepositoryInterface;
-use App\Domain\ValueObject\Content;
 use App\Domain\ValueObject\PostId;
-use App\Domain\ValueObject\Title;
 
-class AtualizarPost
+class ExcluirPost
 {
     private PostRepositoryInterface $postRepository;
 
@@ -20,17 +18,12 @@ class AtualizarPost
         $this->postRepository = $postRepository;
     }
 
-    public function atualizar(AtualizaPostDTO $atualizaDto): Post
+    public function excluir(ExcluiPostDTO $excluiDto): Post
     {
-        $post = $this->postRepository->getById(PostId::fromInt($atualizaDto->getPostId()));
-        $this->verificaSeAutorEstaEditando($post, $atualizaDto->getUser());
+        $post = $this->postRepository->getById(PostId::fromInt($excluiDto->getPostId()));
+        $this->verificaSeAutorEstaEditando($post, $excluiDto->getUser());
 
-        $post->atualiza(
-            Title::fromString($atualizaDto->getTitle()),
-            Content::fromString($atualizaDto->getContent())
-        );
-
-        $this->postRepository->store($post);
+        $this->postRepository->remove($post);
 
         return $post;
     }

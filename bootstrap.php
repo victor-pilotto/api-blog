@@ -3,14 +3,13 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use App\Application\Auth\Exception\TokenInvalidoException;
-use App\Application\Auth\Exception\TokenNaoEncontrado;
+use App\Application\Auth\Exception\TokenNaoEncontradoException;
 use App\Application\Handlers\DomainExceptionHandler;
 use App\Application\Handlers\InvalidArgumentExceptionHandler;
 use App\Application\Handlers\NotFoundHandler;
 use App\Application\Handlers\UnauthorizedHandler;
 use App\Domain\Exception\PostNaoExisteException;
 use App\Domain\Exception\UserNaoAutorizadoException;
-use App\Domain\Exception\UserNaoExisteException;
 use Slim\Factory\AppFactory;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -43,10 +42,9 @@ $notFoundHandler = new NotFoundHandler(
 $errorMiddleware = $app->addErrorMiddleware(getenv('APP') !== 'prod', true, true);
 $errorMiddleware->setErrorHandler( InvalidArgumentException::class, $invalidArgumentExceptionHandler, true);
 $errorMiddleware->setErrorHandler( DomainException::class, $domainExceptionHandler, true);
-$errorMiddleware->setErrorHandler( TokenNaoEncontrado::class, $unauthorizedHandler);
+$errorMiddleware->setErrorHandler( TokenNaoEncontradoException::class, $unauthorizedHandler);
 $errorMiddleware->setErrorHandler( TokenInvalidoException::class, $unauthorizedHandler);
 $errorMiddleware->setErrorHandler( UserNaoAutorizadoException::class, $unauthorizedHandler);
-$errorMiddleware->setErrorHandler( UserNaoExisteException::class, $notFoundHandler);
 $errorMiddleware->setErrorHandler( PostNaoExisteException::class, $notFoundHandler);
 
 require_once __DIR__ . '/config/routes.php';

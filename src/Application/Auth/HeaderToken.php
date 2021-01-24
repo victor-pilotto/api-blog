@@ -2,14 +2,6 @@
 
 namespace App\Application\Auth;
 
-use function function_exists;
-use function getallheaders;
-use function is_array;
-use function str_replace;
-use function str_starts_with;
-use function strtolower;
-use function substr;
-
 class HeaderToken
 {
     /** @var string */

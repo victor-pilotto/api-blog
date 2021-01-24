@@ -52,27 +52,27 @@ class LoginDTOTest extends TestCase
         };
 
         return [
-            'fromArrayDeveFalharSeEmailForNull'                       => [
+            'fromArrayDeveFalharSeEmailForNull'          => [
                 'data'             => $substituirValor('email', null),
                 'exceptionMessage' => '"email" is required',
             ],
-            'fromArrayDeveFalharSeEmailForVazio'                      => [
+            'fromArrayDeveFalharSeEmailForVazio'         => [
                 'data'             => $substituirValor('email', ''),
                 'exceptionMessage' => '"email" is not allowed to be empty',
             ],
-            'fromArrayDeveFalharSeEmailNaoForEnviado'                 => [
+            'fromArrayDeveFalharSeEmailNaoForEnviado'    => [
                 'data'             => $emailNaoEnviado,
                 'exceptionMessage' => '"email" is required',
             ],
-            'fromArrayDeveFalharSePasswordForNull'                    => [
+            'fromArrayDeveFalharSePasswordForNull'       => [
                 'data'             => $substituirValor('password', null),
                 'exceptionMessage' => '"password" is required',
             ],
-            'fromArrayDeveFalharSePasswordForVazio'                   => [
+            'fromArrayDeveFalharSePasswordForVazio'      => [
                 'data'             => $substituirValor('password', ''),
                 'exceptionMessage' => '"password" is not allowed to be empty',
             ],
-            'fromArrayDeveFalharSePasswordNaoForEnviado'              => [
+            'fromArrayDeveFalharSePasswordNaoForEnviado' => [
                 'data'             => $passwordNaoEnviado,
                 'exceptionMessage' => '"password" is required',
             ],

@@ -43,7 +43,7 @@
       "@test-coverage",
       "@pdepend"
     ],
-    "cs-check": "phpcs",
+    "cs-check": "phpcs -s",
     "cs-fix": "phpcbf",
     "test": "phpunit --colors=always",
     "analyze": "phpstan analyse ./src --level max --memory-limit=4000M"

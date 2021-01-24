@@ -30,7 +30,7 @@ class BuscaPostPorFiltroAction
 
         /** @var PostRepositoryInterface $postRepository */
         $postRepository = $this->container->get(PostRepositoryInterface::class);
-        $posts = $postRepository->findByBuscaPostPorFiltroDto($buscaPostPorFiltroDto);
+        $posts          = $postRepository->findByBuscaPostPorFiltroDto($buscaPostPorFiltroDto);
 
         $posts = array_map(static fn (Post $post) => $post->jsonSerialize(), $posts);
 

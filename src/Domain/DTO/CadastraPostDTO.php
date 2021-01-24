@@ -2,7 +2,7 @@
 
 namespace App\Domain\DTO;
 
-use App\Domain\ValueObject\UserId;
+use App\Domain\Entity\User;
 use Assert\Assertion;
 
 class CadastraPostDTO
@@ -10,7 +10,7 @@ class CadastraPostDTO
     private function __construct(
         private string $title,
         private string $content,
-        private UserId $userId
+        private User $user
     ) {
     }
 
@@ -24,9 +24,9 @@ class CadastraPostDTO
         return $this->content;
     }
 
-    public function getUserId(): UserId
+    public function getUser(): User
     {
-        return $this->userId;
+        return $this->user;
     }
 
     public static function fromArray(array $params): self
@@ -40,7 +40,7 @@ class CadastraPostDTO
         return new self(
             $params['title'],
             $params['content'],
-            $params['userId']
+            $params['user']
         );
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Domain\Service;
 
+use App\Domain\Entity\User;
 use App\Domain\Repository\UserRepositoryInterface;
-use App\Domain\ValueObject\UserId;
 
 class ExcluirUser
 {
@@ -14,9 +14,8 @@ class ExcluirUser
         $this->userRepository = $userRepository;
     }
 
-    public function excluir(UserId $id): void
+    public function excluir(User $user): void
     {
-        $user = $this->userRepository->getById($id);
         $this->userRepository->remove($user);
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Domain\Exception;
 
-class UserNaoExisteException extends \Exception
+use Exception;
+
+class UserNaoExisteException extends Exception
 {
     public static function execute(): self
     {
