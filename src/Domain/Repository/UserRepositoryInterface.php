@@ -11,6 +11,8 @@ interface UserRepositoryInterface
 {
     public function store(User $user): void;
 
+    public function remove(User $user): void;
+
     public function findAll(): array;
 
     public function getById(UserId $id): User;

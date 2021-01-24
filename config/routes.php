@@ -3,6 +3,7 @@
 use App\Application\Rest\BuscaUserAction;
 use App\Application\Rest\CadastraUserAction;
 use App\Application\Middleware;
+use App\Application\Rest\ExcluiUserAction;
 use App\Application\Rest\ListaUsersAction;
 use App\Application\Rest\LoginAction;
 use DI\Container;
@@ -17,3 +18,4 @@ $app->post('/login', new LoginAction($container));
 $app->post('/user', new CadastraUserAction($container));
 $app->get('/user', new ListaUsersAction($container));
 $app->get('/user/{id}', new BuscaUserAction($container));
+$app->delete('/user/{id}', new ExcluiUserAction($container));

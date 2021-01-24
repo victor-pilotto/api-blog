@@ -25,6 +25,12 @@ class UserRepository implements UserRepositoryInterface
         $this->entityManager->flush();
     }
 
+    public function remove(User $user): void
+    {
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
+    }
+
     public function findAll(): array
     {
         return $this->entityManager->getRepository(User::class)->findAll();
@@ -57,7 +63,4 @@ class UserRepository implements UserRepositoryInterface
 
         return $user instanceof User ? $user : null;
     }
-
-
-
 }
