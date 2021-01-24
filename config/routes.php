@@ -18,4 +18,4 @@ $app->post('/login', new LoginAction($container));
 $app->post('/user', new CadastraUserAction($container));
 $app->get('/user', new ListaUsersAction($container));
 $app->get('/user/{id}', new BuscaUserAction($container));
-$app->delete('/user/{id}', new ExcluiUserAction($container));
+$app->delete('/user/me', new ExcluiUserAction($container));

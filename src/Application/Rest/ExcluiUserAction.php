@@ -4,9 +4,7 @@ namespace App\Application\Rest;
 
 use App\Application\Auth\AuthenticationInterface;
 use App\Application\Auth\HeaderToken;
-use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\Service\ExcluirUser;
-use App\Domain\ValueObject\UserId;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -24,11 +22,11 @@ class ExcluiUserAction
     {
         /** @var AuthenticationInterface $authentication */
         $authentication = $this->container->get(AuthenticationInterface::class);
-        $authentication->authenticate(HeaderToken::get());
+        $userId = $authentication->authenticate(HeaderToken::get());
 
         /** @var ExcluirUser $excluirUser */
         $excluirUser = $this->container->get(ExcluirUser::class);
-        $excluirUser->excluir(UserId::fromInt($request->getAttribute('id')));
+        $excluirUser->excluir($userId);
 
         return $response
             ->withStatus(204);
