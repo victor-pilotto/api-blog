@@ -48,7 +48,7 @@ class Authentication implements AuthenticationInterface
             );
 
             if (! $this->config->validator()->validate($token, ...$this->config->validationConstraints())) {
-                throw Exception\TokenInvalidoException::fromInvalido();
+                throw Exception\TokenInvalidoException::execute();
             }
 
             assert($token instanceof Token\Plain);
@@ -57,7 +57,7 @@ class Authentication implements AuthenticationInterface
 
             return $this->userRepository->getById($userId);
         } catch (\Exception $e) {
-            throw Exception\TokenInvalidoException::fromInvalido();
+            throw Exception\TokenInvalidoException::execute();
         }
     }
 }

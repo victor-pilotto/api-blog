@@ -31,9 +31,10 @@ $errorMiddleware = $app->addErrorMiddleware(getenv('APP') !== 'prod', true, true
 
 $errorMiddleware->setErrorHandler( InvalidArgumentException::class, $invalidArgumentExceptionHandler, true);
 $errorMiddleware->setErrorHandler( DomainException::class, $domainExceptionHandler, true);
-$errorMiddleware->setErrorHandler( TokenNaoEncontradoException::class, $unauthorizedHandler);
-$errorMiddleware->setErrorHandler( TokenInvalidoException::class, $unauthorizedHandler);
-$errorMiddleware->setErrorHandler( UserNaoAutorizadoException::class, $unauthorizedHandler);
-$errorMiddleware->setErrorHandler( UserNaoExisteException::class, $notFoundHandler);
-$errorMiddleware->setErrorHandler( PostNaoExisteException::class, $notFoundHandler);
+$errorMiddleware->setErrorHandler([UserNaoExisteException::class, PostNaoExisteException::class], $notFoundHandler);
+$errorMiddleware->setErrorHandler([
+    TokenNaoEncontradoException::class,
+    UserNaoAutorizadoException::class,
+    TokenInvalidoException::class
+], $unauthorizedHandler);
 
