@@ -2,13 +2,12 @@
 
 namespace App\Infrastructure\Doctrine;
 
+use App\Domain\DTO\BuscaPostPorFiltroDTO;
 use App\Domain\Entity\Post;
-use App\Domain\Entity\User;
+use App\Domain\Exception;
 use App\Domain\Repository\PostRepositoryInterface;
 use App\Domain\ValueObject\PostId;
-use App\Domain\ValueObject\UserId;
 use Doctrine\ORM\EntityManager;
-use App\Domain\Exception;
 
 class PostRepository implements PostRepositoryInterface
 {
@@ -39,5 +38,21 @@ class PostRepository implements PostRepositoryInterface
         }
 
         throw Exception\PostNaoExisteException::execute();
+    }
+
+    public function findByBuscaPostPorFiltroDto(BuscaPostPorFiltroDTO $buscaPostPorFiltroDTO): array
+    {
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+
+        $queryBuilder
+            ->select('p')
+            ->from(Post::class, 'p')
+            ->where('p.title LIKE :query')
+            ->orWhere('p.content LIKE :query')
+            ->setParameter(
+                'query','%' . $buscaPostPorFiltroDTO->getQueryParams() . '%',
+            );
+
+        return $queryBuilder->getQuery()->execute();
     }
 }

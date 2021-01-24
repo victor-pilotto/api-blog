@@ -2,6 +2,7 @@
 
 use App\Application\Rest\AtualizaPostAction;
 use App\Application\Rest\BuscaPostAction;
+use App\Application\Rest\BuscaPostPorFiltroAction;
 use App\Application\Rest\BuscaUserAction;
 use App\Application\Rest\CadastraPostAction;
 use App\Application\Rest\CadastraUserAction;
@@ -26,5 +27,6 @@ $app->delete('/user/me', new ExcluiUserAction($container));
 
 $app->post('/post', new CadastraPostAction($container));
 $app->put('/post/{id}', new AtualizaPostAction($container));
-$app->get('/post', new ListaPostsAction($container));
+$app->get('/post/search', new BuscaPostPorFiltroAction($container));
 $app->get('/post/{id}', new BuscaPostAction($container));
+$app->get('/post', new ListaPostsAction($container));
